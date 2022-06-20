@@ -1,16 +1,22 @@
-# AWX
+# AWX Installation script. Operator-based version.
+Many thanks to who did assisted me in digging:
+IRC libra.chat: guys from #awx-project 
+Google Group: https://groups.google.com/forum/#!forum/awx-project
+
+If you are new then you better start from here: https://github.com/ansible/awx-operator
 
 Presets:
 - configure kubectl
 - single node
-- local storage type
-- /data/postgres is claimed by PVC
+- storage type: local storage
+- /data/postgres is claimed by PVC, should be present on the node as well as be owned by root
 - suppose we have a Cluster UI https://myrancherinstance.com/dashboard/home    Cluster Name: "awx-k8s"
 
 To deploy a specific version of AWX Operator in Kubernetes cluster:
 
 - If it is for the first time, then we should tune the Cluster.
-Edit kubelet config to mount postgres data directory within a pod:
+Edit kubelet config for postgres data directory to be accessible from within pod:
+* Don't know why - Directly clicking on Edit Config from main Cluster menu gave me another result ( Rancher 2.5.2 )
  go to UI, _Cluster Management => then 3 dots menu => Edit Config => Edit as Yaml_ and update kubelet manifest like so:
 
 ```
@@ -55,7 +61,7 @@ A":
 $ kubectl get secret awx-admin-password -o go-template='{{range $k,$v := .data}}{{printf "%s: " $k}}{{if not $v}}{{$v}}{{else}}{{$v | base64decode}}{{end}}{{"\n"}}{{end}}'
 ```
 
-Migration steps ( DRAFT VERSTION ):
+Migration steps are described here: 
 set operator replicas to 0:
 ```
  $ kubectl edit deployment awx-operator-controller-manager
