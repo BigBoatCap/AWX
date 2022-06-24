@@ -74,7 +74,7 @@ set awx replicas to 0:
 
 Recreate DB:
 ```
-$ kubectl exec -it awx-demo-postgres-0 -- psql -U awx postgres
+$ kubectl exec -it awx-postgres-0 -- psql -U awx postgres
 $ postgres# DROP DATABASE awx;
 $ postgres# CREATE DATABASE awx;
 $ postgres# \q
