@@ -99,4 +99,4 @@ Watch Task container logs:
 kubectl logs -f --since=1m $(kubectl get po| grep awx| head -1| awk '{print $1}') -c $(kubectl get po $(kubectl get po| grep awx| head -1| awk '{print $1}') -ojson| jq -r '.spec.containers[].name'| grep task)
 ```
 
-! ! ! _Do not use *undeploy.sh* script in production_
+! ! ! __Do not use *undeploy.sh* script in production__
